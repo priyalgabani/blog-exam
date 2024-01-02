@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>articleform</title>
+
+    <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+      .container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+      }
+      #articleform {
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          border-radius: 10px;
+          padding: 20px;
+          width: 400px;
+          text-align: center;
+      }
+      textarea {
+          height: 150px;
+      }
+      
+      </style>
+  </head>
+  <body>
+
+    <%- include("nav")  %>
+    <div class='container'>
+    <form id="articleform" action="/article/update/:id" method="POST" >
+      <input type="text" id="title" name="title" placeholder="title" value="<%= udata.title %>"/><br/><br/>
+      <input type="text" id="content"  name="content" placeholder="content" value="<%= udata.content %>" ><br/><br/>
+      <input type="url" id="image" name="image" placeholder="image" value="<%= udata.image %>"/><br/><br/>
+      <input type="number" id="price" name="price" placeholder="price" value="<%= udata.price %>"/><br/><br/>
+      <input type="submit" value="Create Post" />
+    </form>
+  </div>
+  </body>
+  <script>
+    let url = window.location.href.split("/");
+   console.log(url)
+   let id = url[url.length - 1]
+   console.log(id)
+
+    document.getElementById("articleform").addEventListener("submit", (e) => {
+       e.preventDefault();
+       const udata = {
+           title: document.getElementById("title").value,
+           content: document.getElementById("content").value,
+           price: document.getElementById("price").value,
+           image: document.getElementById("image").value,
+       }
+       console.log(udata)
+       fetch(`/article/edit/${id}`, {
+            method: "PATCH",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify(udata,
+            alert('Update successfully'),
+            title.value="",
+            content.value="",
+            price.value="",
+            image.value="",
+            window.location.href = "/user/articlelist",
+            )
+        });
+   })
+</script>
+</html>

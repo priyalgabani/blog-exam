@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>document</title>
+  <style>
+    #box{
+      display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 30px;
+    gap:15px
+    }
+    #box img {
+      max-width: 100px;
+      margin-right: 19px;
+      border-radius: 5px;
+      height: auto;
+    }
+    .title {
+      font-weight: bold;
+      font-size: 18px;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <%- include("nav") %>
+
+    <div class="container">
+      <div id="box"></div>
+
+    </div>
+
+    <script>
+
+      fetch("/article/post")
+        .then((res) => res.json())
+        .then((data) => display(data));
+
+      const pro_delete = (id) => {
+        window.location.reload();
+        fetch(`/article/delete/${id}`, {
+          method: "delete",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            const deletedElement = document.getElementById(id);
+            if (deletedElement) {
+              deletedElement.remove();
+            }
+          })
+          .catch((error) => console.error(error));
+      };
+
+      const display = (data) => {
+        document.getElementById("box").innerHTML = " ";
+        data.map((ele) => {
+          let img = document.createElement("img");
+          img.src = ele.image;
+          let title = document.createElement("p");
+          title.innerHTML = ele.title;
+          let content = document.createElement("p");
+          content.innerHTML = ele.content;
+          let price = document.createElement("p");
+          price.innerHTML = `MRP:Rs. ${ele.price}`;
+          let deletes = document.createElement("button");
+          deletes.innerHTML = "DELETE"
+          deletes.addEventListener("click", () => pro_delete(ele._id));
+
+          let deletes1 = document.createElement("button");
+          deletes1.innerHTML = "UPDATE"
+          deletes1.addEventListener("click", () => {
+            window.location.href = `/article/update/${ele._id}`;
+          })
+
+          let div = document.createElement("div");
+          div.append(img, title, price, content, deletes, deletes1);
+          document.getElementById("box").append(div);
+        });
+      };
+    </script>
+</body>
+
+</html>

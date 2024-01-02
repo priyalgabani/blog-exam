@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>articleform</title>
+
+    <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+      .container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+      }
+      #articleform {
+      background-color: #fff;
+      max-width: 400px;
+      padding: 20px; 
+      width: 300px;
+      height: 450px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    input{
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px;
+    }
+    #btn{
+      background-color: #2f3130;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        margin-top: 10px
+    }
+      textarea {
+          height: 150px;
+      }
+      
+      </style>
+  </head>
+  <body>
+
+    <%- include("nav")  %>
+    <div class='container'>
+    <form id="articleform" action="/article/create" method="POST">
+      <h2>form</h2>
+      <input type="text" id="title" name="title" placeholder="title"/><br/><br/>
+      <input type="text" name="content" placeholder="content" ><br/><br/>
+      <input type="url" id="image" name="image" placeholder="image"/><br/><br/>
+      <input type="number" id="price" name="price" placeholder="price"/><br/><br/>
+      <input type="submit" value="Create Post" id="btn"/>
+    </form>
+  </div>
+  </body>
+</html>

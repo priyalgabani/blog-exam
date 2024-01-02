@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>article</title>
+  <style>
+    #parent-box{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 30px;
+    gap:15px
+    }
+    #parent-box img {
+      max-width: 100px;
+      margin-right: 19px;
+      border-radius: 5px;
+      height: auto;
+    }
+    .title {
+      font-weight: bold;
+      font-size: 18px;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <%- include("nav") %>
+    <div id="parent-box"></div>
+</body>
+<script>
+
+  fetch("/article/alls")
+      .then((res) => res.json())
+      .then((data) => display(data));
+
+  const display = (data) => {
+      document.getElementById("parent-box").innerHTML = " ";
+      data.map((ele) => {
+          let img = document.createElement("img");
+          img.src = ele.image;
+          let title = document.createElement("p");
+          title.innerHTML = ele.title;
+          let content = document.createElement("p");
+          content.innerHTML =ele.content;
+          let price = document.createElement("p");
+          price.innerHTML =`MRP:Rs. ${ele.price}`;
+
+          let div = document.createElement("div");
+          div.append(img, title, price , content );
+          document.getElementById("parent-box").append(div);
+      });
+  };
+</script>
+
+</html>
